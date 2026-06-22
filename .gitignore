@@ -1,0 +1,42 @@
+node_modules
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+.venv/
+venv/
+
+# Environment Variables
+.env
+
+# Node Modules
+node_modules/
+
+# Build files
+dist/
+build/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Playwright
+playwright-profile/
+**/playwright-profile/
+
+# Cache
+cache/
+.cache/
+Cache/
+**/CacheStorage/
+
+# Browser data
+Default/
+Service Worker/
+
+*.env
+.env.*

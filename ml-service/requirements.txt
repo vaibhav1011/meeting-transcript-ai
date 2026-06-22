@@ -1,0 +1,10 @@
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+setuptools<81
+numpy==2.2.6
+matplotlib==3.11.0
+soundfile==0.13.1
+torch==2.7.0
+torchaudio==2.7.0
+pyannote.audio==3.3.2
+whisperx==3.3.6
