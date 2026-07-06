@@ -24,6 +24,7 @@ meeting-transcript-ai/
 ├── ml-service/      # Python microservice — WhisperX transcription + speaker diarization
 ├── extension/       # Chrome extension for triggering/managing meeting bots
 └── docker-compose.yml
+
 ## Tech Stack
 
 | Layer            | Technology                                   |
@@ -33,14 +34,13 @@ meeting-transcript-ai/
 | Meeting Bot      | Playwright (browser automation)               |
 | ML/Transcription | Python, WhisperX, pyannote.audio               |
 | Browser Extension| JavaScript (Chrome Extension APIs)            |
-| Infra            | Docker, Docker Compose                        |
 
 ## How It Works
 
 1. User submits a meeting link through the dashboard or Chrome extension.
-2. The **bot-service** launches a headless/automated browser session (via Playwright) 
-   that joins the meeting on the detected platform (Meet/Zoom/Teams).
-3. Audio is captured during the session and streamed/passed to the **ml-service**.
+2. The **bot-service** launches a Playwright-driven browser session that joins the 
+   meeting on the detected platform (Meet/Zoom/Teams).
+3. Audio is captured during the session and passed to the **ml-service**.
 4. WhisperX transcribes the audio with word-level timestamps; pyannote.audio assigns 
    speaker labels to each transcript segment.
 5. The processed transcript is stored via the **backend** (MongoDB) and surfaced on the 
@@ -51,23 +51,34 @@ meeting-transcript-ai/
 ### Prerequisites
 - Node.js 18+
 - Python 3.10+
-- Docker & Docker Compose
-- MongoDB (or use the provided Docker service)
+- MongoDB (local or Atlas)
 
 ### Setup
+Each service is run independently with `npm start` / its own entry point:
+
 ```bash
 git clone https://github.com/vaibhav1011/meeting-transcript-ai.git
 cd meeting-transcript-ai
-docker-compose up --build
-```
 
-This spins up the frontend, backend, bot-service, and ml-service together.
+# Frontend
+cd frontend && npm install && npm start
+
+# Backend
+cd ../backend && npm install && npm start
+
+# Bot service
+cd ../bot-service && npm install && npm start
+
+# ML service
+cd ../ml-service && pip install -r requirements.txt && python app.py
+```
 
 ### Environment Variables
 Create a `.env` file in `backend/` and `ml-service/` with the required keys 
 (MongoDB URI, WhisperX model config, etc. — see each service's `.env.example`).
 
 ## Roadmap
+- [ ] Dockerize all services for one-command startup
 - [ ] Support for recurring meeting auto-scheduling
 - [ ] Slack/Notion export for summaries and action items
 - [ ] Multi-language transcription support
